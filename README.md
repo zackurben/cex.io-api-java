@@ -16,7 +16,7 @@ If you would like to support the development of this project, please spread the 
 ##How to use:
 1. Download this API source.
 2. Generate a Cex.io API key and API secret (https://cex.io/trade/profile).
-    This key needs the following permissions, to use full functionality:
+    This key needs the following permissions, to enable full functionality:
   * Account Balance
   * Open Order
   * Place Order
