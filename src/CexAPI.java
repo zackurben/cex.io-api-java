@@ -63,33 +63,42 @@ public class CexAPI {
 		Mac hmac = Mac.getInstance("HmacSHA256");
 		SecretKeySpec secret_key = new SecretKeySpec(((String) this.apiSecret).getBytes(), "HmacSHA256");
 			hmac.init(secret_key);
-			
-		String out = String.format("%X", new BigInteger(1, hmac.doFinal(message.getBytes())));
-		System.out.println("SIGNATURE: " + out);
 		
-		return out;
+		return String.format("%X", new BigInteger(1, hmac.doFinal(message.getBytes())));
 	}
 	
 	private String post(String addr, String param, boolean auth) throws MalformedURLException, IOException {		
-		URLConnection connection = new URL(addr).openConnection();
-			//connection.setRequestProperty("Accept-Charset", "UTF-8");
-			connection.setRequestProperty("User-Agent", "Cex.io Java API");
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); 
-			connection.setRequestProperty("charset", "utf-8");
-			
 		DataOutputStream output = null;
-		BufferedReader input = null;	
+		BufferedReader input = null;
+		String charset = "UTF-8";
+		
+		URLConnection connection = new URL(addr).openConnection();
+			connection.setRequestProperty("User-Agent", "Cex.io Java API");
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestProperty("Accept-Charset", charset);
+			connection.setRequestProperty("Charset", charset);
 		
 		if(auth) {
 			// generate post variables and catch errors
 			try {
 				String tSig = this.signature();
-				String tNon = new String(this.nonce++ + "");
+				String tNon = String.valueOf(this.nonce);
 				
 				connection.setDoOutput(true);
 				output = new DataOutputStream(connection.getOutputStream());
-				String content = "key=" + URLEncoder.encode(this.apiKey, "utf-8") + "&signature=" +
-						URLEncoder.encode(tSig, "utf-8") + "&nonce=" + URLEncoder.encode(tNon, "utf-8");
+				String content = "key=" + URLEncoder.encode(this.apiKey, charset) + "&signature=" +
+						URLEncoder.encode(tSig, charset) + "&nonce=" + URLEncoder.encode(tNon, charset);
+				
+				if(param.contains(",")) {
+					String[] temp = param.split(",");
+					
+					for(int a = 0; a < temp.length; a+=2){
+						//connection.addRequestProperty(temp[a], temp[a+1]);
+						content += "&" + temp[a] + "=" + temp[a+1] + "&";
+					}
+					
+					content = content.substring(0, content.length()-1);
+				}
 				
 				output.writeBytes(content);
 				output.flush();
@@ -100,14 +109,8 @@ public class CexAPI {
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		if(param.contains(",")) {
-			String[] temp = param.split(",");
 			
-			for(int a = 0; a < temp.length; a+=2){
-				connection.addRequestProperty(temp[a], temp[a+1]);
-			}
+			this.nonce++;
 		}
 		
 		input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
