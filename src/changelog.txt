@@ -18,4 +18,7 @@
  - Updated API methods to catch errors.
  - Updated the API test to have a version number and added license.
  - Removed the API test file to reflect API methods catching errors. 
+
+1.0.5
+ - Added method comments. 
  
