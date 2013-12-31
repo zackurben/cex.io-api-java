@@ -1,8 +1,30 @@
-import java.io.IOException;
-import java.net.MalformedURLException;
+/**
+ * This project is licensed under the terms of the MIT license,
+ * you can read more in LICENSE.txt.
+ *
+ * test.java
+ * Version		:	1.0.1
+ * Author		:	Zack Urben
+ * Contact		:	zackurben@gmail.com
+ * Creation		:	12/29/13
+ *
+ * This script requires a free API Key from Cex.io, which can be obtained
+ * here: https://cex.io/trade/profile
+ * This API Key requires the following permissions:
+ * Account Balance, Place Order, Cancel Order, Open Order
+ *
+ * This program requires the free Cex.io Java API, which can be obtained
+ * here: 
+ *
+ * Support:
+ * Motivation BTC	@ 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
+ * Cex.io Referral	@ https://cex.io/r/0/kannibal3/0/
+ * Cryptsy Trade Key@ e5447842f0b6605ad45ced133b4cdd5135a4838c
+ * Other donations accepted via email request.
+ */
 
 public class test {
-	public static void main(String[] args) throws MalformedURLException, IOException {
+	public static void main(String[] args) {
 		CexAPI test = new CexAPI("username", "api_key", "api_secret");
 
 		// get current ticker for couple

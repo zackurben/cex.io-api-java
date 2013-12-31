@@ -14,3 +14,8 @@
  - Added public change log (changelog.txt).
  - Moved and updated license to text file (LICENSE.txt).
  
+1.0.4
+ - Updated API methods to catch errors.
+ - Updated the API test to have a version number and added license.
+ - Removed the API test file to reflect API methods catching errors. 
+ 
