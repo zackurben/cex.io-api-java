@@ -1,0 +1,16 @@
+1.0.0
+ - Initial release.
+ - Added MIT license.
+ 
+1.0.1
+ - General code cleanup.
+ - Fixed nonce incrementing problem.
+ - Fixed API calls which required user authentication.
+ 
+1.0.2
+ - Added API test script (test.java).
+ 
+1.0.3
+ - Added public change log (changelog.txt).
+ - Moved and updated license to text file (LICENSE.txt).
+ 

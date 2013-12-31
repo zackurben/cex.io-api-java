@@ -17,7 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
  * you can read more in LICENSE.txt.
  *
  * CexAPI.java
- * Version		:	1.0.0
+ * Version		:	1.0.3
  * Author		:	Zack Urben
  * Contact		:	zackurben@gmail.com
  * Creation		:	12/29/13
