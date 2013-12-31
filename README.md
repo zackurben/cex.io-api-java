@@ -1,9 +1,26 @@
 #Cex.io Java API
-Java source files and examples for the Cex.io API.
+The Java source files and examples for the Cex.io API. This is an opensource project under the MIT license.
+
+## Contact
+* Author: Zack Urben
+* Contact: zackurben@gmail.com
+
+### Support
+If you would like to support the development of this project, please spread the word and donate!
+
+* Motivation BTC	@ 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
+* Cex.io referral	@ https://cex.io/r/0/kannibal3/0/
+* Cryptsy Trade Key	@ e5447842f0b6605ad45ced133b4cdd5135a4838c
+* Other donations accepted via email request!
 
 ##How to use:
 1. Download this API source.
-2. Generate a Cex.io API key and API secret (https://cex.io/trade/profile)
+2. Generate a Cex.io API key and API secret (https://cex.io/trade/profile).
+    This key needs the following permissions, to use full functionality:
+  * Account Balance
+  * Open Order
+  * Place Order
+  * Cancel Order 
 3. Create your Java project
 4. Add the API to your project directory.
 5. Create an API object:
@@ -13,6 +30,7 @@ CexAPI test = new CexAPI("username", "api_key", "api_secret");
 ```
 
 ```java 
+				// API Object Parameters:
 "username"		// Your Cex.io username
 "api_key"		// Your Cex.io API key
 "api_secret"	// Your Cex.io API secret
@@ -58,8 +76,8 @@ test.open_orders("pair");
 test.cancel_order("order_id");
 ```
  
-##Examples:
-Connect and create API object:
+##Examples with Output:
+Create API object:
 
 ```java 
 CexAPI test = new CexAPI("username", "api_key", "api_secret");
@@ -129,7 +147,7 @@ System.out.println(test.open_orders("GHS/BTC"));
 Cancel the account order with the given ID:
 
 ```java
-System.out.println(test.cancel_order(order));
+System.out.println(test.cancel_order(123456789));
 ```
 
 ```json
