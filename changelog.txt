@@ -22,3 +22,9 @@
 1.0.5
  - Added method comments. 
  
+1.0.6
+ - Added README.md
+ - Changed 'couple' to 'pair' to more closely resemble Forex terminology.
+ - Updated test script comments to more closely mirror the function comments. 
+ - Moved LICENSE.txt outside the src folder
+ - Moved changelog.txt outisde the src folder

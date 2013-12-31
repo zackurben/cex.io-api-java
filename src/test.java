@@ -3,7 +3,7 @@
  * you can read more in LICENSE.txt.
  *
  * test.java
- * Version		:	1.0.1
+ * Version		:	1.0.2
  * Author		:	Zack Urben
  * Contact		:	zackurben@gmail.com
  * Creation		:	12/29/13
@@ -27,32 +27,32 @@ public class test {
 	public static void main(String[] args) {
 		CexAPI test = new CexAPI("username", "api_key", "api_secret");
 
-		// get current ticker for couple
+		// Fetch the ticker data, for the currency pair.
 		System.out.println("Testing the \"GHS/BTC\" ticker..!");
 		System.out.println(test.ticker("GHS/BTC"));
 
-		// get current order book for couple
+		// Fetch the order book data, for the currency pair.
 		System.out.println("\nTesting the \"GHS/BTC\" order_book..!");
 		System.out.println(test.order_book("GHS/BTC"));
 
-		// check current trade history for couple, since given time.
+		// Fetch the trade history data, for the currency pair.
 		System.out.println("\nTesting the \"GHS/BTC\" trade_history..!");
 		System.out.println(test.trade_history("GHS/BTC", 1));
 
-		// check current account balance
+		// Fetch the account balance data.
 		System.out.println("\nTesting the user balance..!");
 		System.out.println(test.balance());
 
-		// place order for couple with given amount at given price per GHS
+		// Place an order, for the currency pair, with the given amount and price.
 		System.out.println("\nTesting the \"GHS/BTC\" place_order..!");
 		String temp = test.place_order("GHS/BTC", "buy", 1f, 0.00000001f);
 		System.out.println(temp);
 
-		// display open orders for couple
+		// Fetch the account open orders, for the currency pair.
 		System.out.println("\nTesting the \"GHS/BTC\" open_orders..!");
 		System.out.println(test.open_orders("GHS/BTC"));
 
-		// cancel a current open order by id
+		// Cancel the account order with the given ID.
 		temp = temp.split(",")[0].split(":")[1].split("\"")[1];
 		int order = Integer.parseInt(temp);
 		System.out.println("\nTesting the \"GHS/BTC\" cancel_order..!");

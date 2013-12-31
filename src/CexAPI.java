@@ -3,7 +3,7 @@
  * you can read more in LICENSE.txt.
  *
  * CexAPI.java
- * Version		:	1.0.5
+ * Version		:	1.0.6
  * Author		:	Zack Urben
  * Contact		:	zackurben@gmail.com
  * Creation		:	12/29/13
@@ -166,56 +166,56 @@ public class CexAPI {
 	 * Wrapper for post method; builds the correct URL for the POST request.
 	 * 
 	 * @param method (String) = Method for the POST request.
-	 * @param couple (String) = Cex.io currency pair for the POST request.
+	 * @param pair (String) = Cex.io currency pair for the POST request.
 	 * @param param (String) = Parameters to add to the POST request.
 	 * @param auth (Boolean) = Authentication required flag.
 	 * @return (String) = Result from POST sent to server.
 	 */
-	private String apiCall(String method, String couple, String param, boolean auth) {
+	private String apiCall(String method, String pair, String param, boolean auth) {
 		method = method + "/";
 		
-		// if couple exists, add slash after it
-		if(couple != "") {
-			couple = couple + "/";
+		// if pair exists, add slash after it
+		if(pair != "") {
+			pair = pair + "/";
 		}
 		
-		return this.post(("https://www.cex.io/api/" + method + couple), param, auth);
+		return this.post(("https://www.cex.io/api/" + method + pair), param, auth);
 	}
 	
 	/**
-	 * Fetch the ticker data, for the given currency pair. 
+	 * Fetch the ticker data, for the given currency pair.
 	 * 
-	 * @param couple (String) = Cex.io currency pair for the POST request.
+	 * @param pair (String) = Cex.io currency pair for the POST request.
 	 * @return (String) = The public ticker data for the given pair.
 	 */
-	public String ticker(String couple) {
-		return this.apiCall("ticker", couple, "", false);
+	public String ticker(String pair) {
+		return this.apiCall("ticker", pair, "", false);
 	}
 	
 	/**
-	 * Fetch the order book data, for the given currency pair. 
+	 * Fetch the order book data, for the given currency pair.
 	 * 
-	 * @param couple (String) = Cex.io currency pair for the POST request.
+	 * @param pair (String) = Cex.io currency pair for the POST request.
 	 * @return (String) = The public order book data for the given pair.
 	 */
-	public String order_book(String couple) {
-		return this.apiCall("order_book", couple, "", false);
+	public String order_book(String pair) {
+		return this.apiCall("order_book", pair, "", false);
 	}
 	
 	/**
-	 * Fetch the trade history data, for the given currency pair. 
+	 * Fetch the trade history data, for the given currency pair.
 	 * 
-	 * @param couple (String) = Cex.io currency pair for the POST request.
+	 * @param pair (String) = Cex.io currency pair for the POST request.
 	 * @param since (Int) = Unix time stamp to retrieve the data from.  
 	 * @return (String) = The public trade history for the given pair
 	 * (Currently limited to the last 1000 trades).
 	 */
-	public String trade_history(String couple, int since) {
-		return this.apiCall("trade_history", couple, ("since," + since), false);
+	public String trade_history(String pair, int since) {
+		return this.apiCall("trade_history", pair, ("since," + since), false);
 	}
 	
 	/**
-	 * Fetch the account balance data, for the Cex.io API Object 
+	 * Fetch the account balance data, for the Cex.io API Object.
 	 *   
 	 * @return (String) = The account balance for all currency pairs.
 	 */
@@ -226,11 +226,11 @@ public class CexAPI {
 	/**
 	 * Fetch the accounts open orders, for the given currency pair.
 	 * 
-	 * @param couple (String) = Cex.io currency pair for the POST request.
+	 * @param pair (String) = Cex.io currency pair for the POST request.
 	 * @return (String) The account open orders for the currency pair.
 	 */
-	public String open_orders(String couple) {
-		return this.apiCall("open_orders", couple, "", true);
+	public String open_orders(String pair) {
+		return this.apiCall("open_orders", pair, "", true);
 	}
 	
 	/**
@@ -248,14 +248,14 @@ public class CexAPI {
 	 * Place an order, via the Cex.io API, for the given currency pair,
 	 * with the given amount and price.
 	 * 
-	 * @param couple (String) = Cex.io currency pair for the POST request.
+	 * @param pair (String) = Cex.io currency pair for the POST request.
 	 * @param type (String) = Order type (buy/sell). 
 	 * @param amount (Float) = Order amount.
 	 * @param price (Float) = Order price.
 	 * @return (String) = The order information, including: the order
 	 * id, time, pending, amount, type, and price.
 	 */
-	public String place_order(String couple, String type, float amount, float price) {
-		return this.apiCall("place_order", couple, ("type," + type + ",amount," + amount + ",price," + price), true);
+	public String place_order(String pair, String type, float amount, float price) {
+		return this.apiCall("place_order", pair, ("type," + type + ",amount," + amount + ",price," + price), true);
 	}
 }
