@@ -13,6 +13,8 @@ If you would like to support the development of this project, please spread the 
 * Cryptsy Trade Key	@ e5447842f0b6605ad45ced133b4cdd5135a4838c
 * Other donations accepted via email request!
 
+**Additional Windows help on the [Project Wiki](https://github.com/zackurben/cex.io-api-java/wiki/Windows-Setup:-Basic-Help).**
+
 ##How to use:
 1. Download this API source.
 2. Generate a Cex.io API key and API secret (https://cex.io/trade/profile).
