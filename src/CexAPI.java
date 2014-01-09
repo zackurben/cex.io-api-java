@@ -39,7 +39,7 @@ public class CexAPI {
 	protected final String apiKey;
 	protected final String apiSecret;
 	private int nonce;
-	
+
 	/**
 	 * Creates a CexAPI Object.
 	 * 
@@ -53,18 +53,19 @@ public class CexAPI {
 		this.apiSecret = secret;
 		this.nonce = (int) System.currentTimeMillis();
 	}
-	
+
 	/**
 	 * Debug the contents of the a CexAPI Object.
 	 * 
 	 * @return (String) = The CexAPI object data: username, apiKey,
-	 * apiSecret, and nonce.
+	 *         apiSecret, and nonce.
 	 */
 	public String toString() {
-		return "{\"username\":\"" + this.username + "\",\"apiKey\":\"" + this.apiKey + "\",\"apiSecret:\"" +
-			this.apiSecret + "\",\"nonce:\"" + this.nonce + "\"}";
+		return "{\"username\":\"" + this.username + "\",\"apiKey\":\""
+				+ this.apiKey + "\",\"apiSecret:\"" + this.apiSecret
+				+ "\",\"nonce:\"" + this.nonce + "\"}";
 	}
-	
+
 	/**
 	 * Create HMAC-SHA256 signature for our POST call.
 	 * 
@@ -73,20 +74,22 @@ public class CexAPI {
 	private String signature() {
 		String message = new String(this.nonce + this.username + this.apiKey);
 		Mac hmac = null;
-		
+
 		try {
 			hmac = Mac.getInstance("HmacSHA256");
-			SecretKeySpec secret_key = new SecretKeySpec(((String) this.apiSecret).getBytes(), "HmacSHA256");
+			SecretKeySpec secret_key = new SecretKeySpec(
+					((String) this.apiSecret).getBytes(), "HmacSHA256");
 			hmac.init(secret_key);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		}
-		
-		return String.format("%X", new BigInteger(1, hmac.doFinal(message.getBytes())));
+
+		return String.format("%X",
+				new BigInteger(1, hmac.doFinal(message.getBytes())));
 	}
-	
+
 	/**
 	 * Make a POST request to the Cex.io API, with the given data.
 	 * 
@@ -95,16 +98,17 @@ public class CexAPI {
 	 * @param auth (Boolean) = Authentication required flag.
 	 * @return (String) = Result from POST sent to server.
 	 */
-	private String post(String addr, String param, boolean auth) {		
+	private String post(String addr, String param, boolean auth) {
 		URLConnection connection = null;
 		DataOutputStream output = null;
 		BufferedReader input = null;
 		String charset = "UTF-8";
-		
+
 		try {
 			connection = new URL(addr).openConnection();
 			connection.setRequestProperty("User-Agent", "Cex.io Java API");
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded");
 			connection.setRequestProperty("Accept-Charset", charset);
 			connection.setRequestProperty("Charset", charset);
 		} catch (MalformedURLException e) {
@@ -112,46 +116,49 @@ public class CexAPI {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// generate post variables and catch errors
-		if(auth) {
+		if (auth) {
 			try {
 				String tSig = this.signature();
 				String tNon = String.valueOf(this.nonce);
-				
+
 				connection.setDoOutput(true);
 				output = new DataOutputStream(connection.getOutputStream());
-				String content = "key=" + URLEncoder.encode(this.apiKey, charset) + "&signature=" +
-						URLEncoder.encode(tSig, charset) + "&nonce=" + URLEncoder.encode(tNon, charset);
-				
-				if(param.contains(",")) {
+				String content = "key="
+						+ URLEncoder.encode(this.apiKey, charset)
+						+ "&signature=" + URLEncoder.encode(tSig, charset)
+						+ "&nonce=" + URLEncoder.encode(tNon, charset);
+
+				if (param.contains(",")) {
 					String[] temp = param.split(",");
-					
-					for(int a = 0; a < temp.length; a+=2){
-						content += "&" + temp[a] + "=" + temp[a+1] + "&";
+
+					for (int a = 0; a < temp.length; a += 2) {
+						content += "&" + temp[a] + "=" + temp[a + 1] + "&";
 					}
-					
-					content = content.substring(0, content.length()-1);
+
+					content = content.substring(0, content.length() - 1);
 				}
-				
+
 				output.writeBytes(content);
 				output.flush();
 				output.close();
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		String response = "";
 		String temp = "";
 		try {
-			input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			
-			while((temp = input.readLine()) != null) {
+			input = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+
+			while ((temp = input.readLine()) != null) {
 				response += temp;
 			}
-			
+
 			input.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -160,7 +167,7 @@ public class CexAPI {
 		this.nonce++;
 		return response;
 	}
-	
+
 	/**
 	 * Wrapper for post method; builds the correct URL for the POST request.
 	 * 
@@ -170,17 +177,19 @@ public class CexAPI {
 	 * @param auth (Boolean) = Authentication required flag.
 	 * @return (String) = Result from POST sent to server.
 	 */
-	private String apiCall(String method, String pair, String param, boolean auth) {
+	private String apiCall(String method, String pair, String param,
+			boolean auth) {
 		method = method + "/";
-		
+
 		// if pair exists, add slash after it
-		if(pair != "") {
+		if (pair != "") {
 			pair = pair + "/";
 		}
-		
-		return this.post(("https://www.cex.io/api/" + method + pair), param, auth);
+
+		return this.post(("https://www.cex.io/api/" + method + pair), param,
+				auth);
 	}
-	
+
 	/**
 	 * Fetch the ticker data, for the given currency pair.
 	 * 
@@ -190,7 +199,7 @@ public class CexAPI {
 	public String ticker(String pair) {
 		return this.apiCall("ticker", pair, "", false);
 	}
-	
+
 	/**
 	 * Fetch the order book data, for the given currency pair.
 	 * 
@@ -200,28 +209,28 @@ public class CexAPI {
 	public String order_book(String pair) {
 		return this.apiCall("order_book", pair, "", false);
 	}
-	
+
 	/**
 	 * Fetch the trade history data, for the given currency pair.
 	 * 
 	 * @param pair (String) = Cex.io currency pair for the POST request.
-	 * @param since (Int) = Unix time stamp to retrieve the data from.  
+	 * @param since (Int) = Unix time stamp to retrieve the data from.
 	 * @return (String) = The public trade history for the given pair
-	 * (Currently limited to the last 1000 trades).
+	 *         (Currently limited to the last 1000 trades).
 	 */
 	public String trade_history(String pair, int since) {
 		return this.apiCall("trade_history", pair, ("since," + since), false);
 	}
-	
+
 	/**
 	 * Fetch the account balance data, for the Cex.io API Object.
-	 *   
+	 * 
 	 * @return (String) = The account balance for all currency pairs.
 	 */
 	public String balance() {
 		return this.apiCall("balance", "", "", true);
 	}
-	
+
 	/**
 	 * Fetch the accounts open orders, for the given currency pair.
 	 * 
@@ -231,30 +240,32 @@ public class CexAPI {
 	public String open_orders(String pair) {
 		return this.apiCall("open_orders", pair, "", true);
 	}
-	
+
 	/**
-	 * Cancel the account order, with the given ID. 
+	 * Cancel the account order, with the given ID.
 	 * 
 	 * @param id (Int) = The order ID number
 	 * @return (String) = The successfulness of the order cancellation:
-	 * (True/False).
+	 *         (True/False).
 	 */
 	public String cancel_order(int id) {
 		return this.apiCall("cancel_order", "", ("id," + id), true);
 	}
-	
+
 	/**
 	 * Place an order, via the Cex.io API, for the given currency pair,
 	 * with the given amount and price.
 	 * 
 	 * @param pair (String) = Cex.io currency pair for the POST request.
-	 * @param type (String) = Order type (buy/sell). 
+	 * @param type (String) = Order type (buy/sell).
 	 * @param amount (Float) = Order amount.
 	 * @param price (Float) = Order price.
 	 * @return (String) = The order information, including: the order
-	 * id, time, pending, amount, type, and price.
+	 *         id, time, pending, amount, type, and price.
 	 */
-	public String place_order(String pair, String type, float amount, float price) {
-		return this.apiCall("place_order", pair, ("type," + type + ",amount," + amount + ",price," + price), true);
+	public String place_order(String pair, String type, float amount,
+			float price) {
+		return this.apiCall("place_order", pair, ("type," + type + ",amount,"
+				+ amount + ",price," + price), true);
 	}
 }

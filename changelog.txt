@@ -30,4 +30,5 @@
  - Moved changelog.txt outisde the src folder
 
 1.0.7
-- Changed objects private entities to protected for outside API integration.
+ - Changed objects private entities to protected for outside API integration.
+ - Updated code format and structure for Java 7 Guidelines.
