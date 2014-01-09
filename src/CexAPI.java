@@ -141,8 +141,6 @@ public class CexAPI {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			this.nonce++;
 		}
 		
 		String response = "";
@@ -159,6 +157,7 @@ public class CexAPI {
 			e.printStackTrace();
 		}
 
+		this.nonce++;
 		return response;
 	}
 	
