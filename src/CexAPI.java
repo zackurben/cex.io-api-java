@@ -3,7 +3,7 @@
  * you can read more in LICENSE.txt.
  *
  * CexAPI.java
- * Version		:	1.0.6
+ * Version		:	1.0.7
  * Author		:	Zack Urben
  * Contact		:	zackurben@gmail.com
  * Creation		:	12/29/13
@@ -35,9 +35,9 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class CexAPI {
-	private final String username;
-	private final String apiKey;
-	private final String apiSecret;
+	protected final String username;
+	protected final String apiKey;
+	protected final String apiSecret;
 	private int nonce;
 	
 	/**

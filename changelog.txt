@@ -28,3 +28,6 @@
  - Updated test script comments to more closely mirror the function comments. 
  - Moved LICENSE.txt outside the src folder
  - Moved changelog.txt outisde the src folder
+
+1.0.7
+- Changed objects private entities to protected for outside API integration.
