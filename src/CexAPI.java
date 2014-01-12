@@ -3,7 +3,7 @@
  * you can read more in LICENSE.txt.
  *
  * CexAPI.java
- * Version		:	1.0.7
+ * Version		:	1.0.8
  * Author		:	Zack Urben
  * Contact		:	zackurben@gmail.com
  * Creation		:	12/29/13
@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -51,7 +52,7 @@ public class CexAPI {
 		this.username = user;
 		this.apiKey = key;
 		this.apiSecret = secret;
-		this.nonce = (int) System.currentTimeMillis();
+		this.nonce = Integer.valueOf((int) (System.currentTimeMillis() / 1000));
 	}
 
 	/**
@@ -72,17 +73,20 @@ public class CexAPI {
 	 * @return (String) = HMAC-SHA256 message for POST authentication.
 	 */
 	private String signature() {
+		++this.nonce;
 		String message = new String(this.nonce + this.username + this.apiKey);
 		Mac hmac = null;
 
 		try {
 			hmac = Mac.getInstance("HmacSHA256");
 			SecretKeySpec secret_key = new SecretKeySpec(
-					((String) this.apiSecret).getBytes(), "HmacSHA256");
+					((String) this.apiSecret).getBytes("UTF-8"), "HmacSHA256");
 			hmac.init(secret_key);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 
@@ -164,7 +168,6 @@ public class CexAPI {
 			e.printStackTrace();
 		}
 
-		this.nonce++;
 		return response;
 	}
 

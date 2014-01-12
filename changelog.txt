@@ -27,8 +27,11 @@
  - Changed 'couple' to 'pair' to more closely resemble Forex terminology.
  - Updated test script comments to more closely mirror the function comments. 
  - Moved LICENSE.txt outside the src folder
- - Moved changelog.txt outisde the src folder
+ - Moved changelog.txt outside the src folder
 
 1.0.7
  - Changed objects private entities to protected for outside API integration.
  - Updated code format and structure for Java 7 Guidelines.
+
+1.0.8
+ - Fixing nonce problems
