@@ -3,7 +3,7 @@
  * you can read more in LICENSE.txt.
  *
  * CexAPI.java
- * Version		:	1.0.8
+ * Version		:	1.0.9
  * Author		:	Zack Urben
  * Contact		:	zackurben@gmail.com
  * Creation		:	12/29/13
@@ -39,7 +39,7 @@ public class CexAPI {
 	protected final String username;
 	protected final String apiKey;
 	protected final String apiSecret;
-	private int nonce;
+	protected int nonce;
 
 	/**
 	 * Creates a CexAPI Object.
@@ -103,69 +103,73 @@ public class CexAPI {
 	 * @return (String) = Result from POST sent to server.
 	 */
 	private String post(String addr, String param, boolean auth) {
-		URLConnection connection = null;
-		DataOutputStream output = null;
-		BufferedReader input = null;
-		String charset = "UTF-8";
+		boolean sent = false;
+		String response = "";
 
-		try {
-			connection = new URL(addr).openConnection();
-			connection.setRequestProperty("User-Agent", "Cex.io Java API");
-			connection.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded");
-			connection.setRequestProperty("Accept-Charset", charset);
-			connection.setRequestProperty("Charset", charset);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		while (!sent) {
+			sent = true;
+			URLConnection connection = null;
+			DataOutputStream output = null;
+			BufferedReader input = null;
+			String charset = "UTF-8";
 
-		// generate post variables and catch errors
-		if (auth) {
 			try {
-				String tSig = this.signature();
-				String tNon = String.valueOf(this.nonce);
+				connection = new URL(addr).openConnection();
+				connection.setRequestProperty("User-Agent", "Cex.io Java API");
+				connection.setRequestProperty("Content-Type",
+						"application/x-www-form-urlencoded");
+				connection.setRequestProperty("Accept-Charset", charset);
+				connection.setRequestProperty("Charset", charset);
 
-				connection.setDoOutput(true);
-				output = new DataOutputStream(connection.getOutputStream());
-				String content = "key="
-						+ URLEncoder.encode(this.apiKey, charset)
-						+ "&signature=" + URLEncoder.encode(tSig, charset)
-						+ "&nonce=" + URLEncoder.encode(tNon, charset);
+				if (auth) {
+					// generate post variables and catch errors
+					String tSig = this.signature();
+					String tNon = String.valueOf(this.nonce);
 
-				if (param.contains(",")) {
-					String[] temp = param.split(",");
+					connection.setDoOutput(true);
+					output = new DataOutputStream(connection.getOutputStream());
+					String content = "key="
+							+ URLEncoder.encode(this.apiKey, charset)
+							+ "&signature=" + URLEncoder.encode(tSig, charset)
+							+ "&nonce=" + URLEncoder.encode(tNon, charset);
 
-					for (int a = 0; a < temp.length; a += 2) {
-						content += "&" + temp[a] + "=" + temp[a + 1] + "&";
+					if (param.contains(",")) {
+						String[] temp = param.split(",");
+
+						for (int a = 0; a < temp.length; a += 2) {
+							content += "&" + temp[a] + "=" + temp[a + 1] + "&";
+						}
+
+						content = content.substring(0, content.length() - 1);
 					}
 
-					content = content.substring(0, content.length() - 1);
+					output.writeBytes(content);
+					output.flush();
+					output.close();
 				}
 
-				output.writeBytes(content);
-				output.flush();
-				output.close();
+				String temp = "";
+				input = new BufferedReader(new InputStreamReader(
+						connection.getInputStream()));
 
-			} catch (IOException e) {
+				while ((temp = input.readLine()) != null) {
+					response += temp;
+				}
+
+				input.close();
+			} catch (MalformedURLException e) {
 				e.printStackTrace();
+			} catch (IOException e) {
+				sent = false;
+				e.printStackTrace();
+
+				// This will happen if cloudflare is active/api is down.
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 			}
-		}
-
-		String response = "";
-		String temp = "";
-		try {
-			input = new BufferedReader(new InputStreamReader(
-					connection.getInputStream()));
-
-			while ((temp = input.readLine()) != null) {
-				response += temp;
-			}
-
-			input.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 		return response;

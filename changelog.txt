@@ -35,3 +35,6 @@
 
 1.0.8
  - Fixing nonce problems
+
+1.0.9
+ - Fixed problem sending request to API if Cloudflare is active/the API is down.
