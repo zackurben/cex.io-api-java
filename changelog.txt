@@ -38,3 +38,9 @@
 
 1.0.9
  - Fixed problem sending request to API if Cloudflare is active/the API is down.
+
+1.0.10
+ - Fixed problem where all authenticated methods were being rejected.
+ - Updated code documentation and format
+ - Updated README
+ - Replaced 'tab' characters with 4 'spaces', for a more uniform IDE experience.
