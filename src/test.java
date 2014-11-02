@@ -36,6 +36,10 @@ public class test {
     System.out.println("Testing method: lastPrice(\"BTC\", \"USD\"):");
     System.out.println(test.lastPrice("BTC", "USD") + "\n");
 
+    // Fetch the price conversion from the Major to Minor currency.
+    System.out.println("Testing method: convert(\"BTC\", \"USD\", 2):");
+    System.out.println(test.convert("BTC", "USD", 2f) + "\n");
+
     // Fetch the order book data, for the currency pair.
     System.out.println("Testing method: orderBook(\"GHS/BTC\"):");
     System.out.println(test.orderBook("GHS/BTC") + "\n");
@@ -61,11 +65,11 @@ public class test {
     temp = temp.split(",")[0].split(":")[1].split("\"")[1];
     System.out.println("Testing method: cancelOrder(" + temp + "):");
     System.out.println("Cancel order (ID: " + temp + "): " + test.cancelOrder(temp) + "\n");
-    
+
     // Fetch the account open orders, for the currency pair.
     System.out.println("Testing method: hashrate():");
     System.out.println(test.hashrate() + "\n");
-    
+
     // Fetch the account open orders, for the currency pair.
     System.out.println("Testing method: workers():");
     System.out.println(test.workers() + "\n");

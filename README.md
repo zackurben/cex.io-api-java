@@ -12,6 +12,7 @@ The Java source files and examples for the Cex.io API. This is an Open Source pr
   - [Create API Object](#create-api-object)
   - [Fetch Ticker Data](#fetch-ticker-data)
   - [Fetch Last Price](#fetch-last-price)
+  - [Convert Currency](#convert-currency)
   - [Fetch Order Book](#fetch-order-book)
   - [Fetch Trade History](#fetch-trade-history)
   - [Fetch Account Balance](#fetch-account-balance)
@@ -81,6 +82,9 @@ ticker("pair");
 // Fetch the last order price for the currency pair.
 lastPrice("major", "minor");
 
+// Fetch the price conversion from the Major to Minor currency.
+convert("major", "minor", "amount");
+
 // Fetch the order book data, for the currency pair.
 orderBook("pair");
 
@@ -136,13 +140,13 @@ ticker("GHS/BTC");
 
 ```json
 {
-    "timestamp": "1398634454",
-    "bid": 0.0079197,
-    "ask": 0.0079206,
-    "low": "0.00765",
-    "high": "0.00839",
-    "last": "0.00792084",
-    "volume": "156529.92009304"
+    "timestamp": "1414961682",
+    "bid": 0.00267964,
+    "ask": 0.00268965,
+    "low": "0.00261101",
+    "high": "0.0027",
+    "last": "0.00268966",
+    "volume": "43614.47202243"
 }
 ```
 
@@ -156,6 +160,19 @@ lastPrice("BTC", "USD")
 ```json
 {
     "lprice": "334.2772"
+}
+```
+
+###Convert Currency
+Fetch the price conversion from the Major to Minor currency.
+
+```java
+convert("BTC", "USD", 2f);
+```
+
+```json
+{
+    "amnt": 669.9326
 }
 ```
 
@@ -222,7 +239,8 @@ balance();
         "orders": "xxx"
     },
     "IXC": {
-        "available": "xxx"
+        "available": "xxx",
+        "orders": "xxx"
     },
     "DVC": {
         "available": "xxx"

@@ -125,17 +125,25 @@ public class CexAPI {
         connection.setRequestProperty("Accept", "application/json");
         connection.setRequestProperty("Charset", charset);
 
-        if (auth) {
-          // Generate POST variables and catch errors.
-          String tSig = this.signature();
-          String tNon = String.valueOf(this.nonce);
-
+        // Add parameters if included with the call or authorization is required.
+        if (param != "" || auth) {
+          String content = "";
           connection.setDoOutput(true);
           output = new DataOutputStream(connection.getOutputStream());
-          String content =
-              "key=" + URLEncoder.encode(this.apiKey, charset) + "&signature="
-                  + URLEncoder.encode(tSig, charset) + "&nonce=" + URLEncoder.encode(tNon, charset);
 
+          // Add authorization details if required for the API method.
+          if (auth) {
+            // Generate POST variables and catch errors.
+            String tSig = this.signature();
+            String tNon = String.valueOf(this.nonce);
+
+            content =
+                "key=" + URLEncoder.encode(this.apiKey, charset) + "&signature="
+                    + URLEncoder.encode(tSig, charset) + "&nonce="
+                    + URLEncoder.encode(tNon, charset);
+          }
+
+          // Separate parameters and add them to the request URL.
           if (param.contains(",")) {
             String[] temp = param.split(",");
 
@@ -220,6 +228,20 @@ public class CexAPI {
    */
   public String lastPrice(String major, String minor) {
     return this.apiCall("last_price", (major + "/" + minor), "", false);
+  }
+
+  /**
+   * Fetch the price conversion from the Major to Minor currency.
+   *
+   * @param major
+   * Cex.io major currency pair.
+   * @param minor
+   * Cex.io minor currency pair.
+   *
+   * @return The the value of the minor currency in relation to the major currency.
+   */
+  public String convert(String major, String minor, float amount) {
+    return this.apiCall("convert", (major + "/" + minor), ("amnt," + amount), false);
   }
 
   /**
