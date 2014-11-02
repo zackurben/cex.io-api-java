@@ -32,6 +32,10 @@ public class test {
     System.out.println("Testing method: ticker(\"GHS/BTC\"):");
     System.out.println(test.ticker("GHS/BTC") + "\n");
 
+    // Fetch the last order price for the currency pair.
+    System.out.println("Testing method: lastPrice(\"BTC\", \"USD\"):");
+    System.out.println(test.lastPrice("BTC", "USD") + "\n");
+
     // Fetch the order book data, for the currency pair.
     System.out.println("Testing method: orderBook(\"GHS/BTC\"):");
     System.out.println(test.orderBook("GHS/BTC") + "\n");

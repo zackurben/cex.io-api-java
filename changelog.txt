@@ -48,3 +48,6 @@
 2.0.0
  - Refactoring code for Google code standards.
  - Fixing issue with cancelOrder() and the overflowing the integer data type.
+ - Added API call for GHash.io account hash rates (hashrate).
+ - Added API call for GHash.io worker hash rates (workers).
+ - Added API call for Cex.io currency pair check (last_price).

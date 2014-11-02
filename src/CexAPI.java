@@ -209,6 +209,20 @@ public class CexAPI {
   }
 
   /**
+   * Fetch the last price for the given currency pairs.
+   *
+   * @param major
+   * Cex.io major currency pair.
+   * @param minor
+   * Cex.io minor currency pair.
+   *
+   * @return The last trade price for the given currency pairs.
+   */
+  public String lastPrice(String major, String minor) {
+    return this.apiCall("last_price", (major + "/" + minor), "", false);
+  }
+
+  /**
    * Fetch the order book data, for the given currency pair.
    * 
    * @param pair
