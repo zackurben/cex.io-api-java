@@ -44,3 +44,7 @@
  - Updated code documentation and format
  - Updated README
  - Replaced 'tab' characters with 4 'spaces', for a more uniform IDE experience.
+
+2.0.0
+ - Refactoring code for Google code standards.
+ - Fixing issue with cancelOrder() and the overflowing the integer data type.

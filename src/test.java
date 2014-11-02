@@ -8,59 +8,54 @@
  * @version 2.0.0
  * @author  Zack Urben
  * @contact zackurben@gmail.com
+ * 
+ * @support
+ * Motivation BTC    @ 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
+ * Cryptsy Trade Key @ e5447842f0b6605ad45ced133b4cdd5135a4838c
  * </pre>
  * 
  * This script requires a free API Key from Cex.io, which can be obtained
  * here: https://cex.io/trade/profile
  * This API Key requires the following permissions:
  * Account Balance, Place Order, Cancel Order, Open Order
- * 
- * This program requires the free Cex.io Java API, which can be obtained
- * here:
- * 
- * Support:
- * Motivation BTC @ 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
- * Cryptsy Trade Key @ e5447842f0b6605ad45ced133b4cdd5135a4838c
  */
 
 public class test {
   public static void main(String[] args) {
     CexAPI test = new CexAPI("username", "api_key", "api_secret");
 
-    // Fetch the CexAPI object data
-    System.out.println("Displaying the user data..!");
-    System.out.println(test.toString());
+    // Fetch the CexAPI account data.
+    System.out.println("Testing User Data:");
+    System.out.println(test.toString() + "\n");
 
     // Fetch the ticker data, for the currency pair.
-    System.out.println("\nTesting the \"GHS/BTC\" ticker..!");
-    System.out.println(test.ticker("GHS/BTC"));
+    System.out.println("Testing method: ticker(\"GHS/BTC\"):");
+    System.out.println(test.ticker("GHS/BTC") + "\n");
 
     // Fetch the order book data, for the currency pair.
-    System.out.println("\nTesting the \"GHS/BTC\" order_book..!");
-    System.out.println(test.order_book("GHS/BTC"));
+    System.out.println("Testing method: orderBook(\"GHS/BTC\"):");
+    System.out.println(test.orderBook("GHS/BTC") + "\n");
 
     // Fetch the trade history data, for the currency pair.
-    System.out.println("\nTesting the \"GHS/BTC\" trade_history..!");
-    System.out.println(test.trade_history("GHS/BTC", 1));
+    System.out.println("Testing method: tradeHistory(\"GHS/BTC\"):");
+    System.out.println(test.tradeHistory("GHS/BTC", 1) + "\n");
 
     // Fetch the account balance data.
-    System.out.println("\nTesting the user balance..!");
-    System.out.println(test.balance());
+    System.out.println("Testing method: balance():");
+    System.out.println(test.balance() + "\n");
 
-    // Place an order, for the currency pair, with the given amount and
-    // price.
-    System.out.println("\nTesting the \"GHS/BTC\" place_order..!");
-    String temp = test.place_order("GHS/BTC", "buy", 1f, 0.00000001f);
-    System.out.println(temp);
+    // Place an order, for the currency pair, with the given amount and price.
+    System.out.println("Testing method: placeOrder(\"GHS/BTC\"):");
+    String temp = test.placeOrder("GHS/BTC", "buy", 1f, 0.00010000f);
+    System.out.println(temp + "\n");
 
     // Fetch the account open orders, for the currency pair.
-    System.out.println("\nTesting the \"GHS/BTC\" open_orders..!");
-    System.out.println(test.open_orders("GHS/BTC"));
+    System.out.println("Testing method: openOrders(\"GHS/BTC\"):");
+    System.out.println(test.openOrders("GHS/BTC") + "\n");
 
     // Cancel the account order with the given ID.
     temp = temp.split(",")[0].split(":")[1].split("\"")[1];
-    int order = Integer.parseInt(temp);
-    System.out.println("\nTesting the \"GHS/BTC\" cancel_order..!");
-    System.out.println("Cancel order (ID: " + order + "): " + test.cancel_order(order));
+    System.out.println("Testing method: cancelOrder(" + temp + "):");
+    System.out.println("Cancel order (ID: " + temp + "): " + test.cancelOrder(temp) + "\n");
   }
 }

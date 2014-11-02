@@ -1,18 +1,15 @@
 #Cex.io Java API
-The Java source files and examples for the Cex.io API. This is an opensource project under the MIT license.
+The Java source files and examples for the Cex.io API. This is an Open Source project under the MIT license.
 
 ## Contact
-* Author    : Zack Urben
-* Contact   : zackurben@gmail.com
+* Author : Zack Urben
+* Contact: zackurben@gmail.com
 
 ### Support
 If you would like to support the development of this project, please spread the word and donate!
 
-* Motivation BTC    @ 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
-* Cex.io referral   @ https://cex.io/r/0/kannibal3/0/
-* Scrypt Referral   @ http://scrypt.cc?ref=baaah
-* Cryptsy Trade Key @ e5447842f0b6605ad45ced133b4cdd5135a4838c
-* Other donations accepted via email request!
+* Motivation BTC   : 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
+* Cryptsy Trade Key: e5447842f0b6605ad45ced133b4cdd5135a4838c
 
 **Additional Windows help on the [Project Wiki](https://github.com/zackurben/cex.io-api-java/wiki/Windows-Setup:-Basic-Help).**
 
@@ -33,23 +30,23 @@ CexAPI test = new CexAPI("username", "api_key", "api_secret");
 ```
 
 ```java 
-                // API Object Parameters:
-"username"      // Your Cex.io username
-"api_key"       // Your Cex.io API key
-"api_secret"    // Your Cex.io API secret
+// API Object Parameters:
+"username"   // Your Cex.io username
+"api_key"    // Your Cex.io API key
+"api_secret" // Your Cex.io API secret
 ```
 
 ##Methods and Parameters:
 Parameters:
 
 ```java 
-            // Description      (Data Type) : Value range.
-"pair"      // Currency pair    (String)    : "GHS/BTC", "LTC/BTC", "NMC/BTC", "GHS/NMC", "BF1/BTC"
-"since"     // Timestamp        (Integer)   : 1 - 2147483647
-"order_id"  // Order Number     (Integer)   : TODO
-"type"      // Order Type       (String)    : "buy", "sell"
-"amount"    // Order Quantitity (Float)     : 0.00000001 - 9223372036854775807
-"price"     // Order Price      (Float)     : 0.00000001 - 9223372036854775807
+           // Description      (Data Type) : Value range.
+"pair"     // Currency pair    (String)    : "GHS/BTC", "LTC/BTC", "NMC/BTC", "GHS/NMC", "BF1/BTC"
+"since"    // Timestamp        (Integer)   : 1 - 2147483647
+"order_id" // Order Number     (Integer)   : TODO
+"type"     // Order Type       (String)    : "buy", "sell"
+"amount"   // Order Quantitity (Float)     : 0.00000001 - 9223372036854775807
+"price"    // Order Price      (Float)     : 0.00000001 - 9223372036854775807
 ```
 
 Methods:
@@ -58,25 +55,25 @@ Methods:
 // Method Format, with required parameters:
    
 // Fetch the ticker data, for the currency pair.
-test.ticker("pair");
+ticker("pair");
 
 // Fetch the order book data, for the currency pair.
-test.order_book("pair");
+orderBook("pair");
 
 // Fetch the trade history data, for the currency pair.
-test.trade_history("pair", "order_id");
+tradeHistory("pair", "order_id");
 
 // Fetch the account balance data.
-test.balance();
+balance();
 
 // Place an order, for the currency pair, with the given amount and price.
-test.place_order("pair", "type", "amount", "price");
+placeOrder("pair", "type", "amount", "price");
 
 // Fetch the account open orders, for the currency pair.
-test.open_orders("pair");
+openOrders("pair");
 
 // Cancel the account order with the given ID.
-test.cancel_order("order_id");
+cancelOrder("order_id");
 ```
  
 ##Examples with Output:
@@ -101,7 +98,7 @@ Fetch the CexAPI object data:
 Fetch the ticker data, for the currency pair "GHS/BTC":
 
 ```java
-System.out.println(test.ticker("GHS/BTC"));
+ticker("GHS/BTC");
 ```
 
 ```json
@@ -119,7 +116,7 @@ System.out.println(test.ticker("GHS/BTC"));
 Fetch the order book data, for the currency pair "GHS/BTC" (Most results removed for length):
 
 ```java
-System.out.println(test.order_book("GHS/BTC"));
+orderBook("GHS/BTC");
 ```
 
 ```json
@@ -143,7 +140,7 @@ System.out.println(test.order_book("GHS/BTC"));
 Fetch the trade history data, for the currency pair "GHS/BTC" (Most results removed for length):
 
 ```java
-System.out.println(test.trade_history("GHS/BTC", 1));
+tradeHistory("GHS/BTC", 1);
 ```
 
 ```json
@@ -160,7 +157,7 @@ System.out.println(test.trade_history("GHS/BTC", 1));
 Fetch the account balance data:
 
 ```java
-System.out.println(test.balance());
+balance();
 ```
 
 ```json
@@ -195,7 +192,7 @@ System.out.println(test.balance());
 Place an order, for the currency pair, with the given amount and price:
 
 ```java
-System.out.println(test.place_order("GHS/BTC", "buy", 1f, 0.00000001f));
+placeOrder("GHS/BTC", "buy", 1f, 0.00000001f);
 ```
 
 ```json
@@ -212,7 +209,7 @@ System.out.println(test.place_order("GHS/BTC", "buy", 1f, 0.00000001f));
 Fetch the account open orders, for the currency pair:
 
 ```java
-System.out.println(test.open_orders("GHS/BTC"));
+openOrders("GHS/BTC");
 ```
 
 ```json
@@ -231,7 +228,7 @@ System.out.println(test.open_orders("GHS/BTC"));
 Cancel the account order with the given ID:
 
 ```java
-System.out.println(test.cancel_order(829229545));
+cancelOrder(829229545);
 ```
 
 ```json

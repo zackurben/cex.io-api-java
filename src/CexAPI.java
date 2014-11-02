@@ -1,6 +1,5 @@
 /**
- * This project is licensed under the terms of the MIT license,
- * you can read more in LICENSE.txt.
+ * This project is licensed under the terms of the MIT license, you can read more in LICENSE.txt.
  * 
  * CexAPI.java
  *
@@ -8,16 +7,17 @@
  * @version 2.0.0
  * @author  Zack Urben
  * @contact zackurben@gmail.com
+ * 
+ * @support
+ * Motivation BTC    @ 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
+ * Cryptsy Trade Key @ e5447842f0b6605ad45ced133b4cdd5135a4838c
  * </pre>
  *
- * This script requires a free API Key from Cex.io, which can be obtained
- * here: https://cex.io/trade/profile
+ * This script requires a free API Key from Cex.io, which can be obtained here:
+ * https://cex.io/trade/profile
+ *
  * This API Key requires the following permissions:
  * Account Balance, Place Order, Cancel Order, Open Order
- * 
- * Support:
- * Motivation BTC @ 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
- * Cryptsy Trade Key @ e5447842f0b6605ad45ced133b4cdd5135a4838c
  */
 
 import java.io.BufferedReader;
@@ -126,7 +126,7 @@ public class CexAPI {
         connection.setRequestProperty("Charset", charset);
 
         if (auth) {
-          // generate post variables and catch errors
+          // Generate POST variables and catch errors.
           String tSig = this.signature();
           String tNon = String.valueOf(this.nonce);
 
@@ -166,11 +166,11 @@ public class CexAPI {
         sent = false;
         e.printStackTrace();
 
-        // This will happen if cloudflare is active/api is down.
+        // This will trigger if CloudFlare is active (Cex API is down).
         try {
           Thread.sleep(10000);
-        } catch (InterruptedException e1) {
-          e1.printStackTrace();
+        } catch (InterruptedException ie) {
+          ie.printStackTrace();
         }
       }
     }
@@ -193,7 +193,7 @@ public class CexAPI {
    * @return Result from POST sent to server.
    */
   private String apiCall(String method, String pair, String param, boolean auth) {
-    // if pair exists, add slash after it
+    // Add a slash after the pair, if it's present.
     if (pair != "") {
       pair = pair + "/";
     }
@@ -221,7 +221,7 @@ public class CexAPI {
    * 
    * @return The public order book data for the given pair.
    */
-  public String order_book(String pair) {
+  public String orderBook(String pair) {
     return this.apiCall("order_book", pair, "", false);
   }
 
@@ -236,7 +236,7 @@ public class CexAPI {
    * @return The public trade history for the given pair (Currently limited to the last 1000
    * trades).
    */
-  public String trade_history(String pair, int since) {
+  public String tradeHistory(String pair, int since) {
     return this.apiCall("trade_history", pair, ("since," + since), false);
   }
 
@@ -257,7 +257,7 @@ public class CexAPI {
    * 
    * @return The account open orders for the currency pair.
    */
-  public String open_orders(String pair) {
+  public String openOrders(String pair) {
     return this.apiCall("open_orders", pair, "", true);
   }
 
@@ -270,7 +270,7 @@ public class CexAPI {
    * @return The boolean successfulness of the order cancellation:
    * (True/False).
    */
-  public String cancel_order(int id) {
+  public String cancelOrder(String id) {
     return this.apiCall("cancel_order", "", ("id," + id), true);
   }
 
@@ -287,10 +287,9 @@ public class CexAPI {
    * @param price
    * Order price.
    * 
-   * @return The order information, including: the order id, time, pending,
-   * amount, type, and price.
+   * @return The order information, including: the order id, time, pending, amount, type, and price.
    */
-  public String place_order(String pair, String type, float amount, float price) {
+  public String placeOrder(String pair, String type, float amount, float price) {
     return this.apiCall("place_order", pair,
         ("type," + type + ",amount," + amount + ",price," + price), true);
   }
