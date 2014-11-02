@@ -1,61 +1,85 @@
 #Cex.io Java API
 The Java source files and examples for the Cex.io API. This is an Open Source project under the MIT license.
 
-## Contact
-* Author : Zack Urben
-* Contact: zackurben@gmail.com
+## Index
+ - [Contact](#contact)
+ - [Support](#support)
+ - [How to Use](#how-to-use)
+ - [Methods and Parameters](#parameters-and-methods)
+  - [Methods](#methods)
+  - [Parameters](#parameters)
+ - [Examples with Output](#examples-with-output)
+  - [Create API Object](#create-api-object)
+  - [Fetch Ticker Data](#fetch-ticker-data)
+  - [Fetch Last Price](#fetch-last-price)
+  - [Fetch Order Book](#fetch-order-book)
+  - [Fetch Trade History](#fetch-trade-history)
+  - [Fetch Account Balance](#fetch-account-balance)
+  - [Place an Order](#place-an-order)
+  - [Fetch Open Orders](#fetch-open-orders)
+  - [Cancel Open Order](#cancel-open-order)
+  - [Fetch Account Hash Rate](#fetch-account-hash-rate)
+  - [Fetch Worker Hash Rate](#fetch-worker-hash-rate)
+ - [Additional Help](#additional-help)
 
-### Support
+## Contact
+```
+Author : Zack Urben
+Contact: zackurben@gmail.com
+```
+
+## Support
 If you would like to support the development of this project, please spread the word and donate!
 
-* Motivation BTC   : 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
-* Cryptsy Trade Key: e5447842f0b6605ad45ced133b4cdd5135a4838c
+```
+Motivation BTC   : 1HvXfXRP9gZqHPkQUCPKmt5wKyXDMADhvQ
+Cryptsy Trade Key: e5447842f0b6605ad45ced133b4cdd5135a4838c
+```
 
 **Additional Windows help on the [Project Wiki](https://github.com/zackurben/cex.io-api-java/wiki/Windows-Setup:-Basic-Help).**
 
-##How to use:
+##How to use
 1. Download this API source.
 2. Generate a Cex.io API key and API secret (https://cex.io/trade/profile).
-    This key needs the following permissions, to enable full functionality:
-  * Account Balance
-  * Open Order
-  * Place Order
-  * Cancel Order 
+ - This key needs all the permissions, to enable full functionality.
 3. Create your Java project
 4. Add the API to your project directory.
 5. Create an API object:
 
-```java 
-CexAPI test = new CexAPI("username", "api_key", "api_secret");
-```
-
-```java 
+```java
 // API Object Parameters:
 "username"   // Your Cex.io username
 "api_key"    // Your Cex.io API key
 "api_secret" // Your Cex.io API secret
+
+CexAPI test = new CexAPI("username", "api_key", "api_secret");
 ```
 
-##Methods and Parameters:
-Parameters:
+##Parameters and Methods
+###Parameters
 
 ```java 
            // Description      (Data Type) : Value range.
 "pair"     // Currency pair    (String)    : "GHS/BTC", "LTC/BTC", "NMC/BTC", "GHS/NMC", "BF1/BTC"
+"major"    // Major Currency   (String)    : TODO
+"minor"    // Minor Currency   (String)    : TODO
 "since"    // Timestamp        (Integer)   : 1 - 2147483647
-"order_id" // Order Number     (Integer)   : TODO
+"order_id" // Order Number     (String)    : TODO
 "type"     // Order Type       (String)    : "buy", "sell"
 "amount"   // Order Quantitity (Float)     : 0.00000001 - 9223372036854775807
 "price"    // Order Price      (Float)     : 0.00000001 - 9223372036854775807
 ```
 
-Methods:
+###Methods
 
 ```java 
 // Method Format, with required parameters:
    
 // Fetch the ticker data, for the currency pair.
 ticker("pair");
+
+// Fetch the last order price for the currency pair.
+lastPrice("major", "minor");
 
 // Fetch the order book data, for the currency pair.
 orderBook("pair");
@@ -82,15 +106,17 @@ hashrate();
 workers();
 ```
  
-##Examples with Output:
-Create API object:
+##Examples with Output
+###Create API object:
 
 ```java 
-CexAPI test = new CexAPI("username", "api_key", "api_secret");
-// Call API methods here
-```
+// API Object Parameters:
+"username"   // Your Cex.io username
+"api_key"    // Your Cex.io API key
+"api_secret" // Your Cex.io API secret
 
-Fetch the CexAPI object data:
+CexAPI test = new CexAPI("username", "api_key", "api_secret");
+```
 
 ```json
 {
@@ -101,7 +127,8 @@ Fetch the CexAPI object data:
 }
 ```
 
-Fetch the ticker data, for the currency pair "GHS/BTC":
+###Fetch Ticker Data
+Fetch the ticker data, for the currency pair "GHS/BTC".
 
 ```java
 ticker("GHS/BTC");
@@ -119,7 +146,21 @@ ticker("GHS/BTC");
 }
 ```
 
-Fetch the order book data, for the currency pair "GHS/BTC" (Most results removed for length):
+###Fetch Last Price
+Fetch the last order price for the currency pair.
+
+```java
+lastPrice("BTC", "USD")
+```
+
+```json
+{
+    "lprice": "334.2772"
+}
+```
+
+###Fetch Order Book
+Fetch the order book data, for the currency pair "GHS/BTC" (Most results removed for length).
 
 ```java
 orderBook("GHS/BTC");
@@ -143,7 +184,8 @@ orderBook("GHS/BTC");
 }
 ```
 
-Fetch the trade history data, for the currency pair "GHS/BTC" (Most results removed for length):
+###Fetch Trade History
+Fetch the trade history data, for the currency pair "GHS/BTC" (Most results removed for length).
 
 ```java
 tradeHistory("GHS/BTC", 1);
@@ -160,7 +202,8 @@ tradeHistory("GHS/BTC", 1);
 ]
 ```
 
-Fetch the account balance data:
+###Fetch Account Balance
+Fetch the account balance data.
 
 ```java
 balance();
@@ -195,7 +238,8 @@ balance();
 }
 ```
 
-Place an order, for the currency pair, with the given amount and price:
+###Place an Order
+Place an order, for the currency pair, with the given amount and price.
 
 ```java
 placeOrder("GHS/BTC", "buy", 1f, 0.00000001f);
@@ -212,7 +256,8 @@ placeOrder("GHS/BTC", "buy", 1f, 0.00000001f);
 }
 ```
 
-Fetch the account open orders, for the currency pair:
+###Fetch Open Orders
+Fetch the account open orders, for the currency pair.
 
 ```java
 openOrders("GHS/BTC");
@@ -231,7 +276,8 @@ openOrders("GHS/BTC");
 ]
 ```
 
-Cancel the account order with the given ID:
+###Cancel Open Order
+Cancel the open order with the given ID.
 
 ```java
 cancelOrder(829229545);
@@ -240,6 +286,9 @@ cancelOrder(829229545);
 ```json
 true
 ```
+
+###Fetch Account Hash Rate
+Fetch the account Hash Rate on GHash.io.
 
 ```java
 hashrate();
@@ -257,6 +306,9 @@ hashrate();
     "prev1d": 0
 }
 ```
+
+###Fetch Worker Hash Rate
+Fetch the worker Hash Rates on GHash.io.
 
 ```java
 workers();
