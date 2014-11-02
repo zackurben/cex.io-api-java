@@ -74,6 +74,12 @@ openOrders("pair");
 
 // Cancel the account order with the given ID.
 cancelOrder("order_id");
+
+// Fetch the GHash.io hash rates for the last 24 hours.
+hashrate();
+
+// Fetch the GHash.io worker stats for the last 24 hours.
+workers();
 ```
  
 ##Examples with Output:
@@ -233,6 +239,47 @@ cancelOrder(829229545);
 
 ```json
 true
+```
+
+```java
+hashrate();
+```
+
+```json
+{
+    "last5m": 0,
+    "last15m": 0,
+    "last1h": 0,
+    "last1d": 0,
+    "prev5m": 0,
+    "prev15m": 0,
+    "prev1h": 0,
+    "prev1d": 0
+}
+```
+
+```java
+workers();
+```
+
+```json
+{
+    "xxx.ghash": {
+        "last5m": 0,
+        "last15m": 0,
+        "last1h": 0,
+        "last1d": 0,
+        "prev5m": 0,
+        "prev15m": 0,
+        "prev1h": 0,
+        "prev1d": 0,
+        "rejected": {
+            "stale": 0,
+            "duplicate": 0,
+            "lowdiff": 0
+        }
+    }
+}
 ```
 
 ##Additional Help

@@ -193,11 +193,6 @@ public class CexAPI {
    * @return Result from POST sent to server.
    */
   private String apiCall(String method, String pair, String param, boolean auth) {
-    // Add a slash after the pair, if it's present.
-    if (pair != "") {
-      pair = pair + "/";
-    }
-
     return this.post(("https://cex.io/api/" + method + "/" + pair), param, auth);
   }
 
@@ -292,5 +287,23 @@ public class CexAPI {
   public String placeOrder(String pair, String type, float amount, float price) {
     return this.apiCall("place_order", pair,
         ("type," + type + ",amount," + amount + ",price," + price), true);
+  }
+
+  /**
+   * Get the GHash hash rates.
+   *
+   * @return The hash rates for the past day, with various time metrics.
+   */
+  public String hashrate() {
+    return this.apiCall("ghash.io", "hashrate", "", true);
+  }
+
+  /**
+   * Get the GHash hash rate for each worker.
+   *
+   * @return The hash rates for each worker for the past day, with various time metrics.
+   */
+  public String workers() {
+    return this.apiCall("ghash.io", "workers", "", true);
   }
 }

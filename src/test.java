@@ -57,5 +57,13 @@ public class test {
     temp = temp.split(",")[0].split(":")[1].split("\"")[1];
     System.out.println("Testing method: cancelOrder(" + temp + "):");
     System.out.println("Cancel order (ID: " + temp + "): " + test.cancelOrder(temp) + "\n");
+    
+    // Fetch the account open orders, for the currency pair.
+    System.out.println("Testing method: hashrate():");
+    System.out.println(test.hashrate() + "\n");
+    
+    // Fetch the account open orders, for the currency pair.
+    System.out.println("Testing method: workers():");
+    System.out.println(test.workers() + "\n");
   }
 }
