@@ -52,3 +52,4 @@
  - Added API call for GHash.io worker hash rates (workers).
  - Added API call for Cex.io currency pair check (last_price).
  - Added API call for Cex.io pair converter (convert).
+ - Added API call for Cex.io chart data (price_stats).

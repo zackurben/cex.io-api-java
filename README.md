@@ -13,6 +13,7 @@ The Java source files and examples for the Cex.io API. This is an Open Source pr
   - [Fetch Ticker Data](#fetch-ticker-data)
   - [Fetch Last Price](#fetch-last-price)
   - [Convert Currency](#convert-currency)
+  - [Fetch Historical Data](#fetch-historical-data)
   - [Fetch Order Book](#fetch-order-book)
   - [Fetch Trade History](#fetch-trade-history)
   - [Fetch Account Balance](#fetch-account-balance)
@@ -61,13 +62,15 @@ CexAPI test = new CexAPI("username", "api_key", "api_secret");
 
 ```java 
            // Description      (Data Type) : Value range.
-"pair"     // Currency pair    (String)    : "GHS/BTC", "LTC/BTC", "NMC/BTC", "GHS/NMC", "BF1/BTC"
+"pair"     // Currency Pair    (String)    : "GHS/BTC", "LTC/BTC", "NMC/BTC", "GHS/NMC", "BF1/BTC"
 "major"    // Major Currency   (String)    : TODO
 "minor"    // Minor Currency   (String)    : TODO
+"hours"    // Hours            (Integer)   : TODO
+"count"    // Result Count     (Integer)   : TODO
 "since"    // Timestamp        (Integer)   : 1 - 2147483647
 "order_id" // Order Number     (String)    : TODO
 "type"     // Order Type       (String)    : "buy", "sell"
-"amount"   // Order Quantitity (Float)     : 0.00000001 - 9223372036854775807
+"amount"   // Order Quantity   (Float)     : 0.00000001 - 9223372036854775807
 "price"    // Order Price      (Float)     : 0.00000001 - 9223372036854775807
 ```
 
@@ -84,6 +87,9 @@ lastPrice("major", "minor");
 
 // Fetch the price conversion from the Major to Minor currency.
 convert("major", "minor", "amount");
+
+// Fetch the historical data points for the Major to Minor currency.
+chart("major", "minor", "hours", "count")
 
 // Fetch the order book data, for the currency pair.
 orderBook("pair");
@@ -154,7 +160,7 @@ ticker("GHS/BTC");
 Fetch the last order price for the currency pair.
 
 ```java
-lastPrice("BTC", "USD")
+lastPrice("BTC", "USD");
 ```
 
 ```json
@@ -174,6 +180,26 @@ convert("BTC", "USD", 2f);
 {
     "amnt": 669.9326
 }
+```
+
+###Fetch Historical Data
+Fetch the historical data points for the Major to Minor currency.
+
+```java
+chart("BTC", "USD", 24, 2);
+```
+
+```json
+[
+    {
+        "tmsp": 1415424600,
+        "price": "334.1699"
+    },
+    {
+        "tmsp": 1415467800,
+        "price": "335.2923"
+    }
+]
 ```
 
 ###Fetch Order Book

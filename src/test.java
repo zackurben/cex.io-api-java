@@ -40,6 +40,10 @@ public class test {
     System.out.println("Testing method: convert(\"BTC\", \"USD\", 2):");
     System.out.println(test.convert("BTC", "USD", 2f) + "\n");
 
+    // Fetch the historical data points for the Major to Minor currency.
+    System.out.println("Testing method: chart(\"BTC\", \"USD\", 24, 100):");
+    System.out.println(test.chart("BTC", "USD", 24, 2) + "\n");
+
     // Fetch the order book data, for the currency pair.
     System.out.println("Testing method: orderBook(\"GHS/BTC\"):");
     System.out.println(test.orderBook("GHS/BTC") + "\n");

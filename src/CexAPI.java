@@ -245,6 +245,25 @@ public class CexAPI {
   }
 
   /**
+   * Fetch the historical data points for the Major to Minor currency.
+   *
+   * @param major
+   * Cex.io major currency pair.
+   * @param minor
+   * Cex.io minor currency pair.
+   * @param hours
+   * The past-tense number of hours to pull data from.
+   * @param count
+   * The maximum number of results desired.
+   *
+   * @return historical data points for the Major to Minor currency.
+   */
+  public String chart(String major, String minor, int hours, int count) {
+    return this.apiCall("price_stats", (major + "/" + minor), ("lastHours," + hours
+        + ",maxRespArrSize," + count), false);
+  }
+
+  /**
    * Fetch the order book data, for the given currency pair.
    * 
    * @param pair
