@@ -20,6 +20,8 @@
  * Account Balance, Place Order, Cancel Order, Open Order
  */
 
+package zackurben.cex.api;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;

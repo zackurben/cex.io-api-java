@@ -20,6 +20,8 @@
  * Account Balance, Place Order, Cancel Order, Open Order
  */
 
+package zackurben.cex.api;
+
 public class test {
   public static void main(String[] args) {
     CexAPI test = new CexAPI("username", "api_key", "api_secret");
